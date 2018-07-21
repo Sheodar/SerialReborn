@@ -1,0 +1,6 @@
+.hide-header .column-header-background {
+    visibility: hidden; -fx-padding: -1em;
+}
+.table-row-cell:selected{
+    -fx-background-color: rgb(190, 255, 186);
+}
