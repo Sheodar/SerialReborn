@@ -36,8 +36,10 @@ public class MethodsClass {
                     String path = res2.getString("path");
                     String currentSeason = res2.getString("currentSeason");
                     String currentSeries = res2.getString("currentSeries");
+                    String comment = res2.getString("comment");
+                    String discription = res2.getString("discription");
 
-                    resultSerials.add(new Serial(idSerial, name, path, getSerialsForSerial(name), currentSeason, currentSeries));
+                    resultSerials.add(new Serial(idSerial, name, path, getSerialsForSerial(name), currentSeason, currentSeries, comment, discription));
                 }
                 res2.close();
             }

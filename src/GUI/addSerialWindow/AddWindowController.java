@@ -1,4 +1,4 @@
-package sample;
+package GUI.addSerialWindow;
 
 import classes.TimeSeason;
 import javafx.beans.value.ChangeListener;
@@ -14,64 +14,56 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
-import java.util.Iterator;
-import java.util.Map;
 
 import static allMethodsDВ.SerialsMethods.addSerial;
-import static allMethodsDВ.SerialsMethods.removeSerial;
-import static allMethodsDВ.UpdateSerialMethods.updateName;
-import static allMethodsDВ.UpdateSerialMethods.updatePath;
-import static allMethodsDВ.UpdateSerialMethods.updateSeasons;
 import static methods.MethodsClass.getTableSerialsNameForDB;
-import static sample.Controller.allSerials;
-import static sample.Controller.pickedSerial;
+import static GUI.mainWindow.MainWindowController.allSerials;
 
 
-public class settingsSerial {
-/**************************************************************************************************************/
-@FXML
-private Button deleteButtonChange;
+public class AddWindowController {
+    /**************************************************************************************************************/
 
     @FXML
-    private TextField fieldNameChange;
+    private Button addSeason;
     @FXML
-    private TextField fieldPathChange;
+    private TableView seasonsTable;
     @FXML
-    private TextField fieldPictureChange;
+    private TableColumn seasonColumn;
     @FXML
-    private Button searchPictureChange;
+    private TableColumn<TimeSeason, String> seriesColumn;
     @FXML
-    private Button addSeasonChange;
+    private TableColumn removeLine;
     @FXML
-    private TableView<TimeSeason> seasonsTableChange;
+    private TextField nameSerialField;
     @FXML
-    private TableColumn<TimeSeason, String> seasonColumnChange;
+    private TextField pathSerialField;
     @FXML
-    private TableColumn<TimeSeason, String> seriesColumnChange;
+    private TextField pictureSerialField;
     @FXML
-    private TableColumn<TimeSeason, String> removeLineChange;
+    private Button searchButton;
     @FXML
-    private Button saveChangesChange;
+    private Button createButton;
     @FXML
-    private Button backButtonChange;
-    @FXML
-    private Label mainError;
+    private Button cancelButton;
     @FXML
     private Label pathNameErrorLabel;
-
+    @FXML
+    private Label mainError;
 
 /**************************************************************************************************************/
+
     private int seasonsBreaker = 0;
-    private boolean bPath = true;
+    private boolean bPath = false;
     private ObservableList<TimeSeason> allSeasons = FXCollections.observableArrayList();
 
 /**************************************************************************************************************/
-    private void print(Object input) {
-    System.out.println(String.valueOf(input));
-}
 
+    private void print(Object input) {
+        System.out.println(String.valueOf(input));
+    }
 
 /**************************************************************************************************************/
+
     private void refreshDeleteBuntton() {
         for (int x = 0; x < allSeasons.size(); x++) {
             if (x == allSeasons.size() - 1) {
@@ -81,57 +73,29 @@ private Button deleteButtonChange;
             }
         }
     }
-/**************************************************************************************************************/
-    private void printAllSeason(){
-
-        for (Iterator<Map.Entry<Integer, Integer>> iterator = pickedSerial.getSeries().entrySet().iterator(); iterator.hasNext(); ) {
-            seasonsBreaker++;
-            Map.Entry<Integer, Integer> entry = iterator.next();
-            allSeasons.add(new TimeSeason(String.valueOf(entry.getKey()), String.valueOf(entry.getValue())));
-        }
-        seasonsTableChange.setItems(allSeasons);
-        for (int x = 0; x < allSeasons.size(); x++) {
-            int finalX = x;
-            allSeasons.get(x).getButton().setFocusTraversable(false);
-            allSeasons.get(x).getButton().setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    allSeasons.remove(finalX);
-                    refreshDeleteBuntton();
-                    seasonsBreaker--;
-                }
-            });
-            refreshDeleteBuntton();
-        }
-    }
 
 /**************************************************************************************************************/
 /**************************************************************************************************************/
 
     @FXML
     private void initialize() throws SQLException {
+        seasonColumn.setCellValueFactory(new PropertyValueFactory<>("seasonNumber"));
+        seriesColumn.setCellValueFactory(new PropertyValueFactory<>("seriesNumber"));
+        removeLine.setCellValueFactory(new PropertyValueFactory<>("button"));
 
-        seasonColumnChange.setCellValueFactory(new PropertyValueFactory<>("seasonNumber"));
-        seriesColumnChange.setCellValueFactory(new PropertyValueFactory<>("seriesNumber"));
-        removeLineChange.setCellValueFactory(new PropertyValueFactory<>("button"));
+        seriesColumn.setCellFactory(TextFieldTableCell.<TimeSeason>forTableColumn());
 
-        seriesColumnChange.setCellFactory(TextFieldTableCell.<TimeSeason>forTableColumn());
-
-        seriesColumnChange.setOnEditCommit((TableColumn.CellEditEvent<TimeSeason, String> event) -> {
+        seriesColumn.setOnEditCommit((TableColumn.CellEditEvent<TimeSeason, String> event) -> {
             TablePosition<TimeSeason, String> pos = event.getTablePosition();
             String newSeriesValue = event.getNewValue();
             int row = pos.getRow();
             TimeSeason game = event.getTableView().getItems().get(row);
             game.setSeriesNumber(newSeriesValue);
         });
-        printAllSeason();
 
-
-        fieldNameChange.setText(pickedSerial.getName());
-        fieldPathChange.setText(pickedSerial.getPath());
-//        fieldPictureChange.getText(); TODO пока не работает (и не будет :с )
 /**************************************************************************************************************/
-        addSeasonChange.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
+
+        addSeason.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
             seasonsBreaker++;
             allSeasons.add(new TimeSeason(String.valueOf(seasonsBreaker), "0"));
             for (int x = 0; x < allSeasons.size(); x++) {
@@ -147,22 +111,26 @@ private Button deleteButtonChange;
                 });
                 refreshDeleteBuntton();
             }
-            seasonsTableChange.setItems(allSeasons);
+            seasonsTable.setItems(allSeasons);
         });
+
 /**************************************************************************************************************/
-        backButtonChange.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
+
+        cancelButton.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
             seasonsBreaker = 0;
             bPath = false;
             allSeasons.clear();
-            fieldPathChange.setText("");
-            fieldNameChange.setText("");
+            pathSerialField.setText("");
+            nameSerialField.setText("");
             pathNameErrorLabel.setVisible(false);
             mainError.setVisible(false);
-            Stage x = (Stage) backButtonChange.getScene().getWindow();
+            Stage x = (Stage) cancelButton.getScene().getWindow();
             x.close();
         });
+
 /**************************************************************************************************************/
-        fieldPathChange.textProperty().addListener(new ChangeListener<String>() {
+
+        pathSerialField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> ov, String t, String t1) {
                 String[] checkUrlFirst = t1.split("://");
@@ -186,18 +154,20 @@ private Button deleteButtonChange;
                         }
                         break;
                 }
-                if (fieldNameChange.getText().length() >= 1) {
+                if (nameSerialField.getText().length() >= 1) {
                     mainError.setVisible(false);
                 } else {
                     mainError.setVisible(true);
                 }
             }
         });
+
 /**************************************************************************************************************/
-        fieldNameChange.textProperty().addListener(new ChangeListener<String>() {
+
+        nameSerialField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> ov, String t, String t1) {
-                if (fieldPathChange.getText().length() >= 1) {
+                if (pathSerialField.getText().length() >= 1) {
                     mainError.setVisible(false);
                 } else {
                     mainError.setVisible(true);
@@ -205,28 +175,23 @@ private Button deleteButtonChange;
             }
         });
 
-
-
 /**************************************************************************************************************/
-        saveChangesChange.setOnAction(new EventHandler<ActionEvent>() {
+
+        createButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 if (!mainError.isVisible() && bPath) {
-                    updateName(pickedSerial.getIdSerialDB(), fieldNameChange.getText());
-                    updatePath(pickedSerial.getIdSerialDB(), fieldPathChange.getText());
-                    updateSeasons(pickedSerial.getIdSerialDB(), allSeasons);
-
-
+                    String name = nameSerialField.getText();
+                    String path = pathSerialField.getText();
+                    addSerial(name, path, allSeasons);
                     allSerials.clear();
                     seasonsBreaker = 0;
                     bPath = false;
                     allSeasons.clear();
-                    fieldPathChange.setText("");
-                    fieldNameChange.setText("");
+                    pathSerialField.setText("");
+                    nameSerialField.setText("");
                     pathNameErrorLabel.setVisible(false);
                     mainError.setVisible(false);
-                    Stage x = (Stage) backButtonChange.getScene().getWindow();
-                    x.close();
                     try {
                         allSerials.addAll(getTableSerialsNameForDB());
                     } catch (SQLException e) {
@@ -237,31 +202,8 @@ private Button deleteButtonChange;
                 }
             }
         });
-/**************************************************************************************************************/
-        deleteButtonChange.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                removeSerial(Integer.parseInt(pickedSerial.getIdSerialDB()));
-                allSerials.clear();
-                seasonsBreaker = 0;
-                bPath = false;
-                allSeasons.clear();
-                fieldPathChange.setText("");
-                fieldNameChange.setText("");
-                pathNameErrorLabel.setVisible(false);
-                mainError.setVisible(false);
-                Stage x = (Stage) backButtonChange.getScene().getWindow();
-                x.close();
-                try {
-                    allSerials.addAll(getTableSerialsNameForDB());
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
 
 /**************************************************************************************************************/
-
 
     }
 }

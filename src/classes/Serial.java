@@ -10,15 +10,20 @@ public class Serial {
     private String currentSeason;
     private String currentSerial;
     private String idSerialDB;
+    private String comment;
+    private String discription;
 
 
-    public Serial(String idSerialDB, String name, String path, Map<Integer, Integer> series, String currentSeason, String currentSerial) {
+    public Serial(String idSerialDB, String name, String path, Map<Integer, Integer> series, String currentSeason, String currentSerial, String comment, String discription) {
         this.name = name;
         this.path = path;
         this.series = series;
         this.currentSeason = currentSeason;
         this.currentSerial = currentSerial;
         this.idSerialDB = idSerialDB;
+        this.comment = comment;
+        this.discription = discription;
+
     }
 
     public Serial() {
@@ -70,5 +75,21 @@ public class Serial {
 
     public void setIdSerialDB(String idSerialDB) {
         this.idSerialDB = idSerialDB;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getDiscription() {
+        return discription;
+    }
+
+    public void setDiscription(String discription) {
+        this.discription = discription;
     }
 }

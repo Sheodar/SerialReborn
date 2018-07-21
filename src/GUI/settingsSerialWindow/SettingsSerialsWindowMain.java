@@ -1,4 +1,4 @@
-package sample;
+package GUI.settingsSerialWindow;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,12 +9,12 @@ import javafx.stage.Window;
 
 import java.io.IOException;
 
-class SettingSerialsWindow {
+public class SettingsSerialsWindowMain {
 
-    static void showSettingsWindow(Window mod) throws IOException {
+    public static void showSettingsWindow(Window mod) throws IOException {
         Stage stg = new Stage();
 
-        Parent root = FXMLLoader.load(SettingSerialsWindow.class.getResource("settingsSerial.fxml"));
+        Parent root = FXMLLoader.load(SettingsSerialsWindowMain.class.getResource("SettingsSerialWindow.fxml"));
         Scene scn = new Scene (root);
 
         stg.setScene(scn);

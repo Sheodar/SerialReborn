@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.addWindow">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.addSerialWindow.AddWindowController">
    <children>
       <Button fx:id="addSeason" focusTraversable="false" layoutX="300.0" layoutY="218.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="110.0" text="Добавить сезон" />
       <TableView fx:id="seasonsTable" cacheShape="false" centerShape="false" editable="true" focusTraversable="false" layoutX="14.0" layoutY="242.0" prefHeight="136.0" prefWidth="267.0" scaleShape="false">

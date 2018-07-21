@@ -1,17 +1,16 @@
-package sample;
+package GUI.mainWindow;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class MainWindowMain extends Application {
 
     @Override
     public void start(Stage Window) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("sample2.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
         Window.setResizable(false);
         Scene z = new Scene (root);
         z.getStylesheets().add("style.css");

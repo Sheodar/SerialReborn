@@ -131,7 +131,41 @@ public class UpdateSerialMethods {
         }
     }
 
+    public static void updateComment (String idSerial, String newComment){
+        try {
+            Statement stmt;
+            stmt = connectionDB.createStatement();
+            stmt.execute("SELECT * FROM serials");
+            ResultSet res = stmt.getResultSet();
+            if (!res.next()) {
+                System.out.println("Not created serials. Please, create signature.");
+                res.close();
+            } else {
+                stmt.execute("UPDATE serials SET comment = '" + newComment + "' WHERE idSerial = " + "'"+idSerial+"'");
+            }
+            stmt.close();
+        } catch (SQLException f) {
+            System.out.println("ашибка3");
+        }
+    }
 
+    public static void updateDiscription (String idSerial, String newDiscription){
+        try {
+            Statement stmt;
+            stmt = connectionDB.createStatement();
+            stmt.execute("SELECT * FROM serials");
+            ResultSet res = stmt.getResultSet();
+            if (!res.next()) {
+                System.out.println("Not created serials. Please, create signature.");
+                res.close();
+            } else {
+                stmt.execute("UPDATE serials SET discription = '" + newDiscription + "' WHERE idSerial = " + "'"+idSerial+"'");
+            }
+            stmt.close();
+        } catch (SQLException f) {
+            System.out.println("ашибка3");
+        }
+    }
 
     public static void updatePicture (String idSerial, String pathPicture){
          //TODO

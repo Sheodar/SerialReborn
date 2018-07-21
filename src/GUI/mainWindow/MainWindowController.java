@@ -1,4 +1,4 @@
-package sample;
+package GUI.mainWindow;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -8,7 +8,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import classes.Serial;
@@ -16,7 +15,6 @@ import classes.SerialsSeries;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -25,16 +23,13 @@ import java.util.*;
 import static DB.ConnectionDB.DBConnect2;
 import static allMethodsDВ.GettersSerialMethods.DBGetCurrentSeason;
 import static allMethodsDВ.GettersSerialMethods.DBGetCurrentSeries;
-import static allMethodsDВ.GettersSerialMethods.DBGetName;
-import static allMethodsDВ.SerialsMethods.removeSerial;
-import static allMethodsDВ.UpdateSerialMethods.updateCurrentSeason;
-import static allMethodsDВ.UpdateSerialMethods.updateCurrentSeries;
+import static allMethodsDВ.UpdateSerialMethods.*;
 import static methods.MethodsClass.getTableSerialsNameForDB;
-import static sample.SettingSerialsWindow.showSettingsWindow;
-import static sample.WindClass.showWindow;
+import static GUI.settingsSerialWindow.SettingsSerialsWindowMain.showSettingsWindow;
+import static GUI.addSerialWindow.AddWindowMain.showWindow;
 
 
-public class Controller {
+public class MainWindowController {
     public static ObservableList<Serial> allSerials = FXCollections.observableArrayList();
     public static int qwe = 0;
     /**
@@ -58,8 +53,6 @@ public class Controller {
     @FXML
     private ChoiceBox<String> choiseSeries;
     @FXML
-    private TextArea serialComment;
-    @FXML
     private Button openSerial;
     @FXML
     private Button settingButton;
@@ -69,6 +62,11 @@ public class Controller {
     private AnchorPane serialsField;
     @FXML
     private AnchorPane mainPane;
+    @FXML
+    private TextArea discriptionField;
+    @FXML
+    private TextArea commentField;
+
 
     private void tablSerial() throws SQLException {
         allSerials.clear();
@@ -207,6 +205,10 @@ public class Controller {
                 qwe=0;
                 serialsField.setVisible(true);
                 pickedSerial = (allTable.getItems().get(allTable.getSelectionModel().getSelectedIndex()));
+
+                commentField.setText(pickedSerial.getComment());
+                discriptionField.setText(pickedSerial.getDiscription());
+
                 updateSeasone(pickedSerial);
                 choiseSeries.getSelectionModel().select(DBGetCurrentSeries(pickedSerial.getName()) - 1);
             }
@@ -260,6 +262,25 @@ public class Controller {
             @Override
             public void onChanged(Change<? extends Serial> c) {
                 allTable.setItems(allSerials);
+            }
+        });
+
+
+        commentField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> ov, String t, String t1) {
+                if (t1 != null)
+                    pickedSerial.setComment(t1);
+                    updateComment(pickedSerial.getIdSerialDB(), t1);
+            }
+        });
+
+        discriptionField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> ov, String t, String t1) {
+                if (t1 != null)
+                    pickedSerial.setDiscription(t1);
+                    updateDiscription(pickedSerial.getIdSerialDB(), t1);
             }
         });
 
