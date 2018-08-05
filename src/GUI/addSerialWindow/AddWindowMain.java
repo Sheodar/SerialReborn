@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class AddWindowMain {
 
-    public static void showWindow(Window mod) throws IOException {
+    public static void showAddingWindow(Window mod) throws IOException {
         Stage stg = new Stage();
 
         Parent root = FXMLLoader.load(AddWindowMain.class.getResource("AddWindow.fxml"));

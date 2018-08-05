@@ -17,11 +17,11 @@ import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Map;
 
+import static allMethodsDВ.GettersSerialMethods.getTableSerialsNameForDB;
 import static allMethodsDВ.SerialsMethods.removeSerial;
 import static allMethodsDВ.UpdateSerialMethods.updateName;
 import static allMethodsDВ.UpdateSerialMethods.updatePath;
 import static allMethodsDВ.UpdateSerialMethods.updateSeasons;
-import static methods.MethodsClass.getTableSerialsNameForDB;
 import static GUI.mainWindow.MainWindowController.allSerials;
 import static GUI.mainWindow.MainWindowController.pickedSerial;
 
@@ -89,6 +89,7 @@ private Button deleteButtonChange;
             allSeasons.add(new TimeSeason(String.valueOf(entry.getKey()), String.valueOf(entry.getValue())));
         }
         seasonsTableChange.setItems(allSeasons);
+
         for (int x = 0; x < allSeasons.size(); x++) {
             int finalX = x;
             allSeasons.get(x).getButton().setFocusTraversable(false);

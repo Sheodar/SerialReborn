@@ -17,7 +17,7 @@
 <AnchorPane fx:id="mainPane" prefHeight="430.0" prefWidth="652.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.mainWindow.MainWindowController">
 
     <children>
-      <AnchorPane fx:id="serialsField" layoutX="200.0" layoutY="25.0" prefHeight="405.0" prefWidth="452.0" style="-fx-background-color: rgb(241, 255, 232);;">
+      <AnchorPane fx:id="serialsField" layoutX="200.0" layoutY="25.0" prefHeight="405.0" prefWidth="452.0" style="-fx-background-color: rgb(241, 255, 232);;" visible="false">
          <children>
             <AnchorPane layoutX="258.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="265.0" prefWidth="180.0" style="-fx-background-color: fff;;" AnchorPane.bottomAnchor="126.0" AnchorPane.leftAnchor="258.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
                <children>
@@ -26,7 +26,7 @@
                         <Font size="9.0" />
                      </font>
                   </Button>
-                  <Label layoutX="-15.0" layoutY="117.0" rotate="-55.4" text="ТУТ БУДЕТ КАРТИНКА">
+                  <Label layoutX="-15.0" layoutY="117.0" rotate="-55.4" text="ТУТ БУДЕТ КАРТИНКА" wrapText="true">
                      <font>
                         <Font size="21.0" />
                      </font>
@@ -36,8 +36,8 @@
             <ChoiceBox fx:id="choiseSeason" focusTraversable="false" layoutX="258.0" layoutY="287.0" prefHeight="25.0" prefWidth="180.0" />
             <ChoiceBox fx:id="choiseSeries" focusTraversable="false" layoutX="258.0" layoutY="319.0" prefHeight="25.0" prefWidth="180.0" />
             <Button fx:id="openSerial" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="258.0" layoutY="361.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="33.0" prefWidth="136.0" text="Открыть" />
-            <TextArea fx:id="commentField" focusTraversable="false" layoutX="14.0" layoutY="288.0" prefHeight="107.0" prefWidth="230.0" promptText="НЕ ПАШЕТ" wrapText="true" />
-            <TextArea fx:id="discriptionField" focusTraversable="false" layoutX="14.0" layoutY="39.0" prefHeight="165.0" prefWidth="230.0" promptText="НЕ ПАШЕТ" wrapText="true" />
+            <TextArea fx:id="commentField" focusTraversable="false" layoutX="14.0" layoutY="288.0" prefHeight="107.0" prefWidth="230.0" promptText="Добавиьте свой комментарий :)" wrapText="true" />
+            <TextArea fx:id="discriptionField" focusTraversable="false" layoutX="14.0" layoutY="39.0" prefHeight="165.0" prefWidth="230.0" promptText="Сюда можно вставить описание сериала" wrapText="true" />
             <Button fx:id="settingButton" focusTraversable="false" layoutX="403.0" layoutY="361.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="33.0" prefWidth="35.0">
                <font>
                   <Font size="16.0" />
@@ -59,7 +59,7 @@
          <menus>
             <Menu mnemonicParsing="false" text="Файл">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Настройки" />
+                  <MenuItem fx:id="optionsBar" mnemonicParsing="false" text="Настройки" />
                   <MenuItem fx:id="fileAdd" mnemonicParsing="false" text="Добавить сериал" />
                </items>
             </Menu>
@@ -100,5 +100,24 @@
             </Tab>
          </tabs>
       </TabPane>
+      <AnchorPane fx:id="startPane" layoutX="200.0" layoutY="25.0" prefHeight="405.0" prefWidth="452.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="29.0" layoutY="103.0" prefHeight="33.0" prefWidth="407.0" text="ВЫБЕРИ СЕРИАЛ ИЗ СПИСКА СЛЕВА" wrapText="true">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="205.0" layoutY="143.0" prefHeight="27.0" prefWidth="55.0" text="ИЛИ">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="helloCreate" layoutX="33.0" layoutY="180.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="399.0" style="-fx-background-color: rgb(20, 79, 168); -fx-border-color: rgb(0, 0, 0); -fx-border-width: 2;" text="CОЗДАЙ НОВЫЙ" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="19.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

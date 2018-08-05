@@ -15,8 +15,8 @@ import javafx.stage.Stage;
 
 import java.sql.SQLException;
 
+import static allMethodsDВ.GettersSerialMethods.getTableSerialsNameForDB;
 import static allMethodsDВ.SerialsMethods.addSerial;
-import static methods.MethodsClass.getTableSerialsNameForDB;
 import static GUI.mainWindow.MainWindowController.allSerials;
 
 
@@ -192,6 +192,9 @@ public class AddWindowController {
                     nameSerialField.setText("");
                     pathNameErrorLabel.setVisible(false);
                     mainError.setVisible(false);
+                    seasonsBreaker = 0;
+                    Stage x = (Stage) createButton.getScene().getWindow();
+                    x.close();
                     try {
                         allSerials.addAll(getTableSerialsNameForDB());
                     } catch (SQLException e) {
