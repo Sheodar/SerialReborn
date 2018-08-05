@@ -1,7 +1,6 @@
 package GUI.optionsWindow;
 
 import classes.Browser;
-import classes.TimeSeason;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -12,27 +11,21 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.*;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.sql.SQLException;
 import java.util.Objects;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import static allMethodsDВ.BrowsersMethods.addBrowser;
 import static allMethodsDВ.BrowsersMethods.removeBrowser;
-import static allMethodsDВ.GettersBrowsersMethods.DBGetCurrentSeason;
-import static allMethodsDВ.GettersBrowsersMethods.getTableSerialsNameForDB;
+import static allMethodsDВ.GettersBrowsersMethods.DBGetCurrentBrowserID;
+import static allMethodsDВ.GettersBrowsersMethods.getTableBrowsersNameForDB;
 import static allMethodsDВ.UpdateBrowsersMethods.updateCurrentBrowser;
 import static allMethodsDВ.UpdateBrowsersMethods.updateName;
 import static allMethodsDВ.UpdateBrowsersMethods.updatePath;
-import static allMethodsDВ.UpdateSerialMethods.updateCurrentSeason;
-import static allMethodsDВ.UtilsDB.getLastValueIntOfColumn;
 import static javafx.scene.control.cell.TextFieldTableCell.forTableColumn;
 
 
@@ -87,7 +80,13 @@ public class OptionsWindowController {
             }
         }
         pickedBrowser.setItems(allBrowsersName);
-        pickedBrowser.getSelectionModel().select(DBGetCurrentSeason()-1);
+        if (allBrowsersName.size() > 0) {
+            for (int z = 0; z<allBrowser.size();z++){
+                if (allBrowser.get(z).getIdBrowserDB() == DBGetCurrentBrowserID()){
+                    pickedBrowser.getSelectionModel().select(z);
+                }
+            }
+        }
     }
 
 
@@ -96,7 +95,7 @@ public class OptionsWindowController {
            allBrowser.clear();
         }
         try {
-            allBrowser.addAll(getTableSerialsNameForDB());
+            allBrowser.addAll(getTableBrowsersNameForDB());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -156,6 +155,7 @@ public class OptionsWindowController {
             Browser pick = event.getTableView().getItems().get(row);
             pick.setName(newNameValue);
             updateName(String.valueOf(pick.getIdBrowserDB()),newNameValue);
+            updateChoiseBoxBrowsers();
         });
 
         printAllBrowsers();

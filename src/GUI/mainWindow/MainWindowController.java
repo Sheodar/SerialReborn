@@ -9,6 +9,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import classes.Serial;
 import classes.SerialsSeries;
@@ -16,12 +19,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 import static DB.ConnectionDB.DBConnect2;
 import static GUI.optionsWindow.OptionsWindowMain.showOptionsWindow;
+import static allMethodsDВ.GettersBrowsersMethods.DBGetCurrentBrowserPath;
 import static allMethodsDВ.GettersSerialMethods.DBGetCurrentSeason;
 import static allMethodsDВ.GettersSerialMethods.DBGetCurrentSeries;
 import static allMethodsDВ.GettersSerialMethods.getTableSerialsNameForDB;
@@ -78,6 +86,45 @@ public class MainWindowController {
     private void tablSerial() throws SQLException {
         allSerials.clear();
         allSerials.addAll(getTableSerialsNameForDB());
+    }
+
+    private void openerURL(String URL,String path) throws IOException {
+        if (Objects.equals(path, "1")){
+            Desktop desktop = null;
+            if (Desktop.isDesktopSupported()) {
+                desktop = Desktop.getDesktop();
+            }
+            try {
+                URI url = new URI(URL);
+                if (desktop != null) {
+                    desktop.browse(url);
+                }
+            } catch (URISyntaxException | IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            String request = String.format("%s %s", path, URL);
+            Runtime runtime = Runtime.getRuntime();
+
+            try {
+                runtime.exec(request);
+            }catch (Exception e){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Ой!");
+                alert.setHeaderText(null);
+                alert.setContentText("Что-то пошло не так, надо проверить настройки браузеров в Файл -> Настройки");
+                alert.showAndWait();
+
+//                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete " + " ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+//                alert.showAndWait();
+//                Alert alert = new Alert(Alert.AlertType.WARNING);
+//                alert.setTitle("Warning Dialog");
+//                alert.setHeaderText("Look, a Warning Dialog");
+//
+//                alert.showAndWait();
+            }
+
+        }
     }
 
     private void updateSeasone(Serial serial) {
@@ -184,7 +231,16 @@ public class MainWindowController {
         openSerial.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, new EventHandler<javafx.scene.input.MouseEvent>() {
             @Override
             public void handle(javafx.scene.input.MouseEvent event) {
-                System.out.println(mainPane.getWidth());
+                try {
+                    openerURL(pickedSerial.getPath(),DBGetCurrentBrowserPath());
+                } catch (IOException e) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText(null);
+                    alert.setContentText("I have a great message for you!");
+
+                    alert.showAndWait();
+                }
             }
         });
 
