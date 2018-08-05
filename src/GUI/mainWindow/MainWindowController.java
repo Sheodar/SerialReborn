@@ -32,6 +32,7 @@ import static GUI.addSerialWindow.AddWindowMain.showAddingWindow;
 
 public class MainWindowController {
     public static ObservableList<Serial> allSerials = FXCollections.observableArrayList();
+    public static ObservableList<Integer> qweqweqwe = FXCollections.observableArrayList();
     public static int qwe = 0;
     /**
      * ОБЩИЕ ПЕРЕМЕННЫЕ
@@ -236,7 +237,13 @@ public class MainWindowController {
                 allTable.setItems(allSerials);
             }
         });
-
+        qweqweqwe.addListener(new ListChangeListener<Integer>() {
+            @Override
+            public void onChanged(Change<? extends Integer> c) {
+                serialsField.setVisible(false);
+                startPane.setVisible(true);
+            }
+        });
 
         commentField.textProperty().addListener(new ChangeListener<String>() {
             @Override

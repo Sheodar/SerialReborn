@@ -16,7 +16,7 @@ public class OptionsWindowMain {
 
         Parent root = FXMLLoader.load(OptionsWindowMain.class.getResource("OptionsWindow.fxml"));
         Scene scn = new Scene (root);
-
+        stg.setResizable(false);
         stg.setScene(scn);
         stg.setTitle("Настройки");
         stg.initModality(Modality.WINDOW_MODAL);

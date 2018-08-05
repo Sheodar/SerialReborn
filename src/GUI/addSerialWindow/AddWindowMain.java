@@ -12,7 +12,7 @@ public class AddWindowMain {
 
         Parent root = FXMLLoader.load(AddWindowMain.class.getResource("AddWindow.fxml"));
         Scene scn = new Scene (root);
-
+        stg.setResizable(false);
         stg.setScene(scn);
         stg.setTitle("Создание сериала");
         stg.initModality(Modality.WINDOW_MODAL);

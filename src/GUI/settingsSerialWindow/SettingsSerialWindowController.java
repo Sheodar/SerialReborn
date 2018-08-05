@@ -23,6 +23,7 @@ import static allMethodsDВ.UpdateSerialMethods.updateName;
 import static allMethodsDВ.UpdateSerialMethods.updatePath;
 import static allMethodsDВ.UpdateSerialMethods.updateSeasons;
 import static GUI.mainWindow.MainWindowController.allSerials;
+import static GUI.mainWindow.MainWindowController.qweqweqwe;
 import static GUI.mainWindow.MainWindowController.pickedSerial;
 
 
@@ -250,6 +251,7 @@ private Button deleteButtonChange;
                 fieldNameChange.setText("");
                 pathNameErrorLabel.setVisible(false);
                 mainError.setVisible(false);
+                qweqweqwe.add(0);
                 Stage x = (Stage) backButtonChange.getScene().getWindow();
                 x.close();
                 try {
