@@ -1,6 +1,6 @@
 package GUI.addSerialWindow;
 
-import classes.TimeSeason;
+import classes.SerialsSeries;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -30,7 +30,7 @@ public class AddWindowController {
     @FXML
     private TableColumn seasonColumn;
     @FXML
-    private TableColumn<TimeSeason, String> seriesColumn;
+    private TableColumn<SerialsSeries, String> seriesColumn;
     @FXML
     private TableColumn removeLine;
     @FXML
@@ -50,19 +50,13 @@ public class AddWindowController {
     @FXML
     private Label mainError;
 
-/**************************************************************************************************************/
+    /**************************************************************************************************************/
 
     private int seasonsBreaker = 0;
     private boolean bPath = false;
-    private ObservableList<TimeSeason> allSeasons = FXCollections.observableArrayList();
+    private ObservableList<SerialsSeries> allSeasons = FXCollections.observableArrayList();
 
-/**************************************************************************************************************/
-
-    private void print(Object input) {
-        System.out.println(String.valueOf(input));
-    }
-
-/**************************************************************************************************************/
+    /**************************************************************************************************************/
 
     private void refreshDeleteBuntton() {
         for (int x = 0; x < allSeasons.size(); x++) {
@@ -74,8 +68,8 @@ public class AddWindowController {
         }
     }
 
-/**************************************************************************************************************/
-/**************************************************************************************************************/
+    /**************************************************************************************************************/
+    /**************************************************************************************************************/
 
     @FXML
     private void initialize() throws SQLException {
@@ -83,13 +77,13 @@ public class AddWindowController {
         seriesColumn.setCellValueFactory(new PropertyValueFactory<>("seriesNumber"));
         removeLine.setCellValueFactory(new PropertyValueFactory<>("button"));
 
-        seriesColumn.setCellFactory(TextFieldTableCell.<TimeSeason>forTableColumn());
+        seriesColumn.setCellFactory(TextFieldTableCell.<SerialsSeries>forTableColumn());
 
-        seriesColumn.setOnEditCommit((TableColumn.CellEditEvent<TimeSeason, String> event) -> {
-            TablePosition<TimeSeason, String> pos = event.getTablePosition();
+        seriesColumn.setOnEditCommit((TableColumn.CellEditEvent<SerialsSeries, String> event) -> {
+            TablePosition<SerialsSeries, String> pos = event.getTablePosition();
             String newSeriesValue = event.getNewValue();
             int row = pos.getRow();
-            TimeSeason game = event.getTableView().getItems().get(row);
+            SerialsSeries game = event.getTableView().getItems().get(row);
             game.setSeriesNumber(newSeriesValue);
         });
 
@@ -97,7 +91,7 @@ public class AddWindowController {
 
         addSeason.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
             seasonsBreaker++;
-            allSeasons.add(new TimeSeason(String.valueOf(seasonsBreaker), "0"));
+            allSeasons.add(new SerialsSeries(String.valueOf(seasonsBreaker), "0"));
             for (int x = 0; x < allSeasons.size(); x++) {
                 int finalX = x;
                 allSeasons.get(x).getButton().setFocusTraversable(false);
@@ -195,12 +189,8 @@ public class AddWindowController {
                     seasonsBreaker = 0;
                     Stage x = (Stage) createButton.getScene().getWindow();
                     x.close();
-                    try {
-                        allSerials.addAll(getTableSerialsNameForDB());
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }else {
+                    allSerials.addAll(getTableSerialsNameForDB());
+                } else {
                     mainError.setVisible(true);
                 }
             }

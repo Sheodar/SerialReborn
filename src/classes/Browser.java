@@ -36,11 +36,17 @@ public class Browser {
         return path;
     }
 
-    public void setPath(String path) { this.path = path; }
+    public void setPath(String path) {
+        this.path = path;
+    }
 
-    public int getIdBrowserDB() { return idBrowserDB; }
+    public int getIdBrowserDB() {
+        return idBrowserDB;
+    }
 
-    public void setIdBrowserDB(int idSerialDB) { this.idBrowserDB = idSerialDB; }
+    public void setIdBrowserDB(int idSerialDB) {
+        this.idBrowserDB = idSerialDB;
+    }
 
     public Button getGetPathButton() {
         return getPathButton;
@@ -61,6 +67,7 @@ public class Browser {
     public Button getRemoveButton() {
         return removeButton;
     }
+
     public void setRemoveButton(Button removeButton) {
         this.removeButton = removeButton;
     }

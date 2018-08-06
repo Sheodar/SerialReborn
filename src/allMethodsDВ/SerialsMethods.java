@@ -1,7 +1,6 @@
 package allMethodsDВ;
 
-import classes.Serial;
-import classes.TimeSeason;
+import classes.SerialsSeries;
 import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
@@ -14,7 +13,9 @@ import static allMethodsDВ.UtilsDB.getLastValueIntOfColumn;
 
 
 public class SerialsMethods {
-    public static void addSerial(String name, String path, ObservableList<TimeSeason> seasons) {
+    /**************************************************************************************************************/
+
+    public static void addSerial(String name, String path, ObservableList<SerialsSeries> seasons) {
         try {
             Statement stmt;
             stmt = connectionDB.createStatement();
@@ -29,8 +30,8 @@ public class SerialsMethods {
                 stmt.execute("INSERT INTO multTableSeasonAndSerials (multKey, multValue) VALUES " +
                         "('" + idSerial + "','" + idSeason + "')");
 
-                String season = seasons.get(x).getSeasonNumber();
-                String series = seasons.get(x).getSeriesNumber();
+                String season = String.valueOf(seasons.get(x).getSeasonNumber());
+                String series = String.valueOf(seasons.get(x).getSeriesNumber());
 
                 stmt.execute("INSERT INTO serialSeasonValue (seasonValue, serialValue, seasonNumber) VALUES " +
                         "('" + idSeason + "','" + series + "','" + season + "')");
@@ -40,6 +41,8 @@ public class SerialsMethods {
             f.printStackTrace();
         }
     }
+
+    /**************************************************************************************************************/
 
     public static void removeSerial(int idSerial) {
         ArrayList<Integer> multValueMass = new ArrayList<>();
@@ -58,15 +61,13 @@ public class SerialsMethods {
                     multValueMass.add(Integer.valueOf(res.getString("multValue")));
                 }
                 for (Integer multValueMas : multValueMass) {
-                    String q = String.valueOf(multValueMas);
-                    stmt.execute("DELETE FROM serialSeasonValue WHERE seasonValue = " + "'"+multValueMas+"'");
+                    stmt.execute("DELETE FROM serialSeasonValue WHERE seasonValue = " + "'" + multValueMas + "'");
                 }
                 for (Integer multValueMas : multValueMass) {
-                    String q = String.valueOf(multValueMas);
-                    stmt.execute("DELETE FROM multTableSeasonAndSerials WHERE multValue = " + "'"+multValueMas+"'");
+                    stmt.execute("DELETE FROM multTableSeasonAndSerials WHERE multValue = " + "'" + multValueMas + "'");
                 }
                 multValueMass.clear();
-                stmt.execute("DELETE FROM serials WHERE idSerial = " + "'"+idSerial+"'");
+                stmt.execute("DELETE FROM serials WHERE idSerial = " + "'" + idSerial + "'");
 
             }
 
@@ -75,4 +76,6 @@ public class SerialsMethods {
             f.printStackTrace();
         }
     }
+
+    /**************************************************************************************************************/
 }

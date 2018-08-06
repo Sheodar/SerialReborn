@@ -25,9 +25,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 
-import static DB.ConnectionDB.DBConnect2;
+import static DB.ConnectionDB.DBConnect;
 import static GUI.optionsWindow.OptionsWindowMain.showOptionsWindow;
 import static allMethodsDВ.GettersBrowsersMethods.DBGetCurrentBrowserPath;
 import static allMethodsDВ.GettersSerialMethods.DBGetCurrentSeason;
@@ -40,20 +39,20 @@ import static GUI.addSerialWindow.AddWindowMain.showAddingWindow;
 
 public class MainWindowController {
     public static ObservableList<Serial> allSerials = FXCollections.observableArrayList();
-    public static ObservableList<Integer> qweqweqwe = FXCollections.observableArrayList();
-    public static int qwe = 0;
-    /**
-     * ОБЩИЕ ПЕРЕМЕННЫЕ
-     **/
+    public static ObservableList<Integer> checkerdel = FXCollections.observableArrayList();
+    private static int qwe = 0;
+
+    /**************************************************************************************************************/
+
     private ObservableList<SerialsSeries> serialData = FXCollections.observableArrayList();
     private ObservableList<String> seasons = FXCollections.observableArrayList();
     private ObservableList<String> series = FXCollections.observableArrayList();
     private Map<Integer, Integer> serialsMap = new HashMap<>();
 
     public static Serial pickedSerial;
+    private static int pickedRow;
 
-    /*******************************/
-    private static Serial focusedSerial;
+    /**************************************************************************************************************/
     @FXML
     private TableView<Serial> allTable;
     @FXML
@@ -73,8 +72,6 @@ public class MainWindowController {
     @FXML
     private AnchorPane serialsField;
     @FXML
-    private AnchorPane mainPane;
-    @FXML
     private TextArea discriptionField;
     @FXML
     private TextArea commentField;
@@ -83,13 +80,18 @@ public class MainWindowController {
     @FXML
     private Button helloCreate;
 
+    /**************************************************************************************************************/
+    /**************************************************************************************************************/
+
     private void tablSerial() throws SQLException {
         allSerials.clear();
         allSerials.addAll(getTableSerialsNameForDB());
     }
 
-    private void openerURL(String URL,String path) throws IOException {
-        if (Objects.equals(path, "1")){
+    /**************************************************************************************************************/
+
+    private void openerURL(String URL, String path) throws IOException {
+        if (Objects.equals(path, "1")) {
             Desktop desktop = null;
             if (Desktop.isDesktopSupported()) {
                 desktop = Desktop.getDesktop();
@@ -102,65 +104,51 @@ public class MainWindowController {
             } catch (URISyntaxException | IOException e) {
                 e.printStackTrace();
             }
-        }else{
+        } else {
             String request = String.format("%s %s", path, URL);
             Runtime runtime = Runtime.getRuntime();
 
             try {
                 runtime.exec(request);
-            }catch (Exception e){
+            } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Ой!");
                 alert.setHeaderText(null);
                 alert.setContentText("Что-то пошло не так, надо проверить настройки браузеров в Файл -> Настройки");
                 alert.showAndWait();
-
-//                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete " + " ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
-//                alert.showAndWait();
-//                Alert alert = new Alert(Alert.AlertType.WARNING);
-//                alert.setTitle("Warning Dialog");
-//                alert.setHeaderText("Look, a Warning Dialog");
-//
-//                alert.showAndWait();
             }
 
         }
     }
+
+    /**************************************************************************************************************/
 
     private void updateSeasone(Serial serial) {
         serialsMap.clear();
         serialData.clear();
         seasons.clear();
-        int z = 0;
         for (Iterator<Map.Entry<Integer, Integer>> iterator = serial.getSeries().entrySet().iterator(); iterator.hasNext(); ) {
             Map.Entry<Integer, Integer> entry = iterator.next();
             seasons.add("Сезон: " + entry.getKey());
-            try {
-                if (entry.getKey() > Integer.parseInt(serial.getCurrentSeason())) {
-                    z++;
-                }
-            } catch (NumberFormatException e) {
-                z = 0;
-            }
 
             for (int x = 0; x < entry.getValue(); x++) {
-                serialData.add(new SerialsSeries(entry.getKey(), x + 1));
+                serialData.add(new SerialsSeries(String.valueOf(entry.getKey()), String.valueOf(x + 1)));
                 serialsMap.put(entry.getKey(), entry.getValue());
             }
         }
-        focusedSerial = serial;
         choiseSeason.setItems(seasons);
         choiseSeason.getSelectionModel().select(DBGetCurrentSeason(serial.getName()) - 1);
     }
 
+    /**************************************************************************************************************/
 
     private void updateSeries() {
         if (serialsMap.size() > 0) {
             series.clear();
             int seasonNumber = Integer.parseInt(choiseSeason.valueProperty().get().substring(choiseSeason.valueProperty().get().length() - 1, choiseSeason.valueProperty().get().length()));
             for (SerialsSeries aSerialData : serialData) {
-                if (aSerialData.getSeasonNumbed() == seasonNumber) {
-                    series.add("Серия: " + aSerialData.getSeriesNumbed());
+                if (Integer.parseInt(aSerialData.getSeasonNumber()) == seasonNumber) {
+                    series.add("Серия: " + aSerialData.getSeriesNumber());
                 }
             }
             choiseSeries.setItems(series);
@@ -171,24 +159,22 @@ public class MainWindowController {
 
     }
 
+    /**************************************************************************************************************/
+    /**************************************************************************************************************/
+
     @FXML
     private void initialize() throws SQLException {
-
         allTable.getStyleClass().add("hide-header");
-        try {
-            DBConnect2();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        DBConnect();
         tablSerial();
-
         ImageView imageSetting = new ImageView(new Image("images/settings2.png"));
         imageSetting.setFitHeight(settingButton.getPrefHeight() - 10);
         imageSetting.setFitWidth(settingButton.getPrefWidth() - 10);
         settingButton.graphicProperty().setValue(imageSetting);
-
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         allTable.setItems(allSerials);
+
+/**************************************************************************************************************/
 
         choiseSeason.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -202,6 +188,8 @@ public class MainWindowController {
             }
         });
 
+/**************************************************************************************************************/
+
         choiseSeries.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, //
@@ -212,6 +200,7 @@ public class MainWindowController {
             }
         });
 
+/**************************************************************************************************************/
 
         allTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -219,6 +208,8 @@ public class MainWindowController {
                 serialsField.setVisible(true);
                 startPane.setVisible(false);
                 pickedSerial = (allTable.getItems().get(allTable.getSelectionModel().getSelectedIndex()));
+                pickedRow  = allTable.getSelectionModel().getSelectedIndex();
+                System.out.println(pickedRow);
 
                 commentField.setText(pickedSerial.getComment());
                 discriptionField.setText(pickedSerial.getDiscription());
@@ -228,21 +219,24 @@ public class MainWindowController {
             }
         });
 
+/**************************************************************************************************************/
+
         openSerial.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, new EventHandler<javafx.scene.input.MouseEvent>() {
             @Override
             public void handle(javafx.scene.input.MouseEvent event) {
                 try {
-                    openerURL(pickedSerial.getPath(),DBGetCurrentBrowserPath());
+                    openerURL(pickedSerial.getPath(), DBGetCurrentBrowserPath());
                 } catch (IOException e) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Information Dialog");
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Ой!");
                     alert.setHeaderText(null);
-                    alert.setContentText("I have a great message for you!");
-
+                    alert.setContentText("Что-то пошло не так, надо проверить настройки браузеров в Файл -> Настройки");
                     alert.showAndWait();
                 }
             }
         });
+
+/**************************************************************************************************************/
 
         fileAdd.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -254,6 +248,9 @@ public class MainWindowController {
                 }
             }
         });
+
+/**************************************************************************************************************/
+
         helloCreate.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -265,6 +262,7 @@ public class MainWindowController {
             }
         });
 
+/**************************************************************************************************************/
 
         optionsBar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -276,6 +274,9 @@ public class MainWindowController {
                 }
             }
         });
+
+/**************************************************************************************************************/
+
         settingButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -287,19 +288,27 @@ public class MainWindowController {
             }
         });
 
+/**************************************************************************************************************/
+
         allSerials.addListener(new ListChangeListener<Serial>() {
             @Override
             public void onChanged(Change<? extends Serial> c) {
                 allTable.setItems(allSerials);
+                allTable.getSelectionModel().select(pickedRow);
             }
         });
-        qweqweqwe.addListener(new ListChangeListener<Integer>() {
+
+/**************************************************************************************************************/
+
+        checkerdel.addListener(new ListChangeListener<Integer>() {
             @Override
             public void onChanged(Change<? extends Integer> c) {
-                serialsField.setVisible(false);
-                startPane.setVisible(true);
+                    serialsField.setVisible(false);
+                    startPane.setVisible(true);
             }
         });
+
+/**************************************************************************************************************/
 
         commentField.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -310,6 +319,8 @@ public class MainWindowController {
             }
         });
 
+/**************************************************************************************************************/
+
         discriptionField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> ov, String t, String t1) {
@@ -318,6 +329,8 @@ public class MainWindowController {
                 updateDiscription(pickedSerial.getIdSerialDB(), t1);
             }
         });
+
+/**************************************************************************************************************/
 
     }
 }

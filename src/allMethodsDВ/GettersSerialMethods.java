@@ -12,8 +12,9 @@ import java.util.Map;
 import static DB.ConnectionDB.connectionDB;
 
 public class GettersSerialMethods {
+    /**************************************************************************************************************/
 
-    public static ArrayList<Serial> getTableSerialsNameForDB() throws SQLException {
+    public static ArrayList<Serial> getTableSerialsNameForDB() {
         ArrayList<Serial> resultSerials = new ArrayList<>();
         try {
             Statement stmt;
@@ -25,30 +26,32 @@ public class GettersSerialMethods {
                 res.close();
             } else {
                 stmt.execute("SELECT * FROM serials");
-                ResultSet res2 = stmt.getResultSet();
+                res = stmt.getResultSet();
 
-                while (res2.next()) {
-                    String idSerial = res2.getString("idSerial");
-                    String name = res2.getString("name");
-                    String path = res2.getString("path");
-                    String currentSeason = res2.getString("currentSeason");
-                    String currentSeries = res2.getString("currentSeries");
-                    String comment = res2.getString("comment");
-                    String discription = res2.getString("discription");
+                while (res.next()) {
+                    String idSerial = res.getString("idSerial");
+                    String name = res.getString("name");
+                    String path = res.getString("path");
+                    String currentSeason = res.getString("currentSeason");
+                    String currentSeries = res.getString("currentSeries");
+                    String comment = res.getString("comment");
+                    String discription = res.getString("discription");
 
                     resultSerials.add(new Serial(idSerial, name, path, getSerialsForSerial(name), currentSeason, currentSeries, comment, discription));
                 }
-                res2.close();
+                res.close();
             }
             stmt.close();
         } catch (SQLException f) {
-            System.out.println("ашибка1");
+            f.printStackTrace();
         }
 
         return resultSerials;
     }
 
-    public static Map<Integer, Integer> getSerialsForSerial(String name) throws SQLException {
+    /**************************************************************************************************************/
+
+    private static Map<Integer, Integer> getSerialsForSerial(String name) throws SQLException {
         Map<Integer, Integer> seriesValue = new HashMap<>();
         ArrayList<Integer> multValueMass = new ArrayList<>();
 
@@ -76,17 +79,19 @@ public class GettersSerialMethods {
                     String q = String.valueOf(multValueMas);
                     stmt.execute("SELECT * FROM serialSeasonValue WHERE seasonValue = '" + q + "'");
                     res = stmt.getResultSet();
-//                    seriesValue.put(Integer.valueOf(res.getString("serialValue")), Integer.valueOf(res.getString("seasonNumber")));
                     seriesValue.put(Integer.valueOf(res.getString("seasonNumber")), Integer.valueOf(res.getString("serialValue")));
                     stmt.execute("SELECT * FROM multTableSeasonAndSerials WHERE multKey = '" + z + "'");
                 }
             }
             stmt.close();
         } catch (SQLException f) {
-            System.out.println("ашибка2");
+            f.printStackTrace();
         }
         return seriesValue;
     }
+
+    /**************************************************************************************************************/
+
     public static String DBGetName(int idSerial) {
         String name = "";
         try {
@@ -107,6 +112,8 @@ public class GettersSerialMethods {
         }
         return name;
     }
+
+    /**************************************************************************************************************/
 
     public static int DBGetCurrentSeason(String name) {
         int currentSeason = 1;
@@ -134,6 +141,8 @@ public class GettersSerialMethods {
         return currentSeason;
     }
 
+    /**************************************************************************************************************/
+
     public static int DBGetCurrentSeries(String name) {
         int currentSeries = 1;
         try {
@@ -158,6 +167,8 @@ public class GettersSerialMethods {
         return currentSeries;
     }
 
+    /**************************************************************************************************************/
+
     public static String DBGetPath(String name) {
         String path = "";
         try {
@@ -179,6 +190,7 @@ public class GettersSerialMethods {
         return path;
     }
 
+    /**************************************************************************************************************/
 
     public static String DBGetPicture(String name) {
         //TODO
@@ -186,5 +198,5 @@ public class GettersSerialMethods {
         return "а тут настоящий путь, май братхер";
     }
 
-
+    /**************************************************************************************************************/
 }

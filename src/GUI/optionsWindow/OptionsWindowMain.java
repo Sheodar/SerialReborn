@@ -15,7 +15,7 @@ public class OptionsWindowMain {
         Stage stg = new Stage();
 
         Parent root = FXMLLoader.load(OptionsWindowMain.class.getResource("OptionsWindow.fxml"));
-        Scene scn = new Scene (root);
+        Scene scn = new Scene(root);
         stg.setResizable(false);
         stg.setScene(scn);
         stg.setTitle("Настройки");

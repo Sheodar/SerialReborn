@@ -1,17 +1,13 @@
 package allMethodsDВ;
 
-import classes.TimeSeason;
-import javafx.collections.ObservableList;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 import static DB.ConnectionDB.connectionDB;
-import static allMethodsDВ.UtilsDB.getLastValueIntOfColumn;
 
 public class UpdateBrowsersMethods {
+    /**************************************************************************************************************/
 
     public static void updateCurrentBrowser(String name) {
         try {
@@ -28,9 +24,11 @@ public class UpdateBrowsersMethods {
             }
             stmt.close();
         } catch (SQLException f) {
-            System.out.println("б_ашибка3");
+            f.printStackTrace();
         }
     }
+
+    /**************************************************************************************************************/
 
     public static void updatePicturePath(String name, String picturePath) {
         try {
@@ -46,9 +44,11 @@ public class UpdateBrowsersMethods {
             }
             stmt.close();
         } catch (SQLException f) {
-            System.out.println("ашибка4");
+            f.printStackTrace();
         }
     }
+
+    /**************************************************************************************************************/
 
     public static void updatePath(String name, String path) {
         try {
@@ -64,9 +64,11 @@ public class UpdateBrowsersMethods {
             }
             stmt.close();
         } catch (SQLException f) {
-            System.out.println("ашибка5");
+            f.printStackTrace();
         }
     }
+
+    /**************************************************************************************************************/
 
     public static void updateName(String idBrowser, String name) {
         try {
@@ -82,8 +84,9 @@ public class UpdateBrowsersMethods {
             }
             stmt.close();
         } catch (SQLException f) {
-            System.out.println("updateName(String idBrowsers, String name)");
             f.printStackTrace();
         }
     }
+
+    /**************************************************************************************************************/
 }

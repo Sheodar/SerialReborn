@@ -6,8 +6,10 @@ import java.sql.Statement;
 
 import static DB.ConnectionDB.connectionDB;
 
-public class UtilsDB {
-    public static int getLastValueIntOfColumn(String tableName, String columnName) {
+class UtilsDB {
+    /**************************************************************************************************************/
+
+    static int getLastValueIntOfColumn(String tableName, String columnName) {
         String result = null;
         try {
             Statement stmt;
@@ -38,4 +40,6 @@ public class UtilsDB {
             return Integer.parseInt(result);
         }
     }
+
+    /**************************************************************************************************************/
 }

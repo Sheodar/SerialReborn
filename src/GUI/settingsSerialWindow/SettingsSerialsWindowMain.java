@@ -13,10 +13,8 @@ public class SettingsSerialsWindowMain {
 
     public static void showSettingsWindow(Window mod) throws IOException {
         Stage stg = new Stage();
-
         Parent root = FXMLLoader.load(SettingsSerialsWindowMain.class.getResource("SettingsSerialWindow.fxml"));
-        Scene scn = new Scene (root);
-
+        Scene scn = new Scene(root);
         stg.setScene(scn);
         stg.setTitle("Настройки сериала");
         stg.initModality(Modality.WINDOW_MODAL);

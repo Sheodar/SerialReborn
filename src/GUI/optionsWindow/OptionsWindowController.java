@@ -50,17 +50,20 @@ public class OptionsWindowController {
 
 
     /**************************************************************************************************************/
+
     private int seasonsBreaker = 0;
     private boolean bPath = true;
     private ObservableList<Browser> allBrowser = FXCollections.observableArrayList();
     private ObservableList<String> allBrowsersName = FXCollections.observableArrayList();
 
     /**************************************************************************************************************/
+
     private static String getFileExtension(String mystr) {
         int index = mystr.lastIndexOf('.');
         return index == -1 ? null : mystr.substring(index);
     }
 
+    /**************************************************************************************************************/
 
     private void setStyleButton(Button button) {
         button.setFocusTraversable(false);
@@ -70,6 +73,7 @@ public class OptionsWindowController {
         button.setPadding(new Insets(1, 8, 1, 8));
     }
 
+    /**************************************************************************************************************/
     private void updateChoiseBoxBrowsers() {
         if (allBrowsersName.size() > 0) {
             allBrowsersName.clear();
@@ -81,24 +85,21 @@ public class OptionsWindowController {
         }
         pickedBrowser.setItems(allBrowsersName);
         if (allBrowsersName.size() > 0) {
-            for (int z = 0; z<allBrowser.size();z++){
-                if (allBrowser.get(z).getIdBrowserDB() == DBGetCurrentBrowserID()){
+            for (int z = 0; z < allBrowser.size(); z++) {
+                if (allBrowser.get(z).getIdBrowserDB() == DBGetCurrentBrowserID()) {
                     pickedBrowser.getSelectionModel().select(z);
                 }
             }
         }
     }
 
+    /**************************************************************************************************************/
 
     private void printAllBrowsers() {
         if (allBrowser.size() > 0) {
-           allBrowser.clear();
+            allBrowser.clear();
         }
-        try {
-            allBrowser.addAll(getTableBrowsersNameForDB());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        allBrowser.addAll(getTableBrowsersNameForDB());
         allBrowserT.setItems(allBrowser);
 
         for (int x = 0; x < allBrowser.size(); x++) {
@@ -116,8 +117,7 @@ public class OptionsWindowController {
                     File file = fileChooser.showOpenDialog(finalButton.getScene().getWindow());
                     if (file != null) {
                         if (Objects.equals(getFileExtension(file.getName()), ".exe")) {
-                            System.out.println((file.getAbsolutePath()));
-                            updatePath(allBrowser.get(finalX1).getName(),file.getAbsolutePath());
+                            updatePath(allBrowser.get(finalX1).getName(), file.getAbsolutePath());
                             printAllBrowsers();
                             updateChoiseBoxBrowsers();
                         }
@@ -139,7 +139,7 @@ public class OptionsWindowController {
     }
 
     /**************************************************************************************************************/
-
+    /**************************************************************************************************************/
     @FXML
     private void initialize() throws SQLException {
         nameBrowserT.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -154,7 +154,7 @@ public class OptionsWindowController {
             int row = pos.getRow();
             Browser pick = event.getTableView().getItems().get(row);
             pick.setName(newNameValue);
-            updateName(String.valueOf(pick.getIdBrowserDB()),newNameValue);
+            updateName(String.valueOf(pick.getIdBrowserDB()), newNameValue);
             updateChoiseBoxBrowsers();
         });
 
@@ -162,12 +162,14 @@ public class OptionsWindowController {
         updateChoiseBoxBrowsers();
 
 /**************************************************************************************************************/
+
         addBrowserButton.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
             addBrowser("Задать имя", "");
             printAllBrowsers();
             updateChoiseBoxBrowsers();
         });
 
+/**************************************************************************************************************/
         backOptionsButton.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
             seasonsBreaker = 0;
             bPath = false;
@@ -175,6 +177,7 @@ public class OptionsWindowController {
             x.close();
         });
 
+/**************************************************************************************************************/
 
         pickedBrowser.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -186,23 +189,7 @@ public class OptionsWindowController {
             }
         });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/**************************************************************************************************************/
 
     }
 }

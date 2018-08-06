@@ -13,7 +13,7 @@ public class MainWindowMain extends Application {
     public void start(Stage Window) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
         Window.setResizable(false);
-        Scene z = new Scene (root);
+        Scene z = new Scene(root);
         z.getStylesheets().add("style.css");
         Window.getIcons().add(new Image("images/Icon.png"));
         Window.setHeight(458.0);

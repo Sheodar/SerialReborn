@@ -1,4 +1,5 @@
 package allMethodsDВ;
+
 import classes.Browser;
 
 import java.sql.ResultSet;
@@ -7,9 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import static DB.ConnectionDB.connectionDB;
-public class GettersBrowsersMethods {
 
-    public static ArrayList<Browser> getTableBrowsersNameForDB() throws SQLException {
+public class GettersBrowsersMethods {
+    /**************************************************************************************************************/
+
+    public static ArrayList<Browser> getTableBrowsersNameForDB() {
         ArrayList<Browser> resultBrowsers = new ArrayList<>();
         try {
             Statement stmt;
@@ -21,17 +24,17 @@ public class GettersBrowsersMethods {
                 res.close();
             } else {
                 stmt.execute("SELECT * FROM browsers");
-                ResultSet res2 = stmt.getResultSet();
+                res = stmt.getResultSet();
 
-                while (res2.next()) {
-                    String idBrowsers = res2.getString("idBrowsers");
-                    String name = res2.getString("name");
-                    String path = res2.getString("path");
-                    String picturePath = res2.getString("picturePath");
+                while (res.next()) {
+                    String idBrowsers = res.getString("idBrowsers");
+                    String name = res.getString("name");
+                    String path = res.getString("path");
+                    String picturePath = res.getString("picturePath");
 
                     resultBrowsers.add(new Browser(Integer.parseInt(idBrowsers), name, path, picturePath));
                 }
-                res2.close();
+                res.close();
             }
             stmt.close();
         } catch (SQLException f) {
@@ -40,6 +43,9 @@ public class GettersBrowsersMethods {
 
         return resultBrowsers;
     }
+
+    /**************************************************************************************************************/
+
     public static int DBGetCurrentBrowserID() {
         int currentSeason = 1;
         try {
@@ -56,7 +62,7 @@ public class GettersBrowsersMethods {
                 res = stmt.getResultSet();
                 if (!res.next()) {
                     return currentSeason;
-                }else{
+                } else {
                     currentSeason = Integer.parseInt(res.getString("idBrowsers"));
                 }
             }
@@ -66,6 +72,9 @@ public class GettersBrowsersMethods {
         }
         return currentSeason;
     }
+
+    /**************************************************************************************************************/
+
     public static String DBGetCurrentBrowserPath() {
         String path = "";
         try {
@@ -83,7 +92,7 @@ public class GettersBrowsersMethods {
                 if (!res.next()) {
                     System.out.println("Not created browser. Please, create signature_her.");
                     res.close();
-                }else{
+                } else {
                     path = res.getString("path");
                 }
             }
@@ -93,4 +102,6 @@ public class GettersBrowsersMethods {
         }
         return path;
     }
+
+    /**************************************************************************************************************/
 }

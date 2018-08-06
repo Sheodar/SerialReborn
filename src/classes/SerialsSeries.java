@@ -4,34 +4,35 @@ import javafx.scene.control.Button;
 
 public class SerialsSeries {
 
-    private int seasonNumbed;
-    private int seriesNumbed;
+    private String seasonNumber;
+    private String seriesNumber;
     private Button button;
 
-    public SerialsSeries(int seasonNumbed, int seriesNumbed) {
-        this.seasonNumbed = seasonNumbed;
-        this.seriesNumbed = seriesNumbed;
+    public SerialsSeries(String seasonNumber, String seriesNumber) {
+        this.seasonNumber = seasonNumber;
+        this.seriesNumber = seriesNumber;
         this.button = new Button("X");
     }
 
     public SerialsSeries() {
     }
 
-    public int getSeasonNumbed() {
-        return seasonNumbed;
+    public String getSeasonNumber() {
+        return seasonNumber;
     }
 
-    public void setSeasonNumbed(int seasonNumbed) {
-        this.seasonNumbed = seasonNumbed;
+    public void setSeasonNumber(String seasonNumber) {
+        this.seasonNumber = seasonNumber;
     }
 
-    public int getSeriesNumbed() {
-        return seriesNumbed;
+    public String getSeriesNumber() {
+        return seriesNumber;
     }
 
-    public void setSeriesNumbed(int seriesNumbed) {
-        this.seriesNumbed = seriesNumbed;
+    public void setSeriesNumber(String seriesNumber) {
+        this.seriesNumber = seriesNumber;
     }
+
     public Button getButton() {
         return button;
     }

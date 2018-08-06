@@ -3,6 +3,7 @@ package GUI.addSerialWindow;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.stage.*;
+
 import java.io.IOException;
 
 public class AddWindowMain {
@@ -11,7 +12,7 @@ public class AddWindowMain {
         Stage stg = new Stage();
 
         Parent root = FXMLLoader.load(AddWindowMain.class.getResource("AddWindow.fxml"));
-        Scene scn = new Scene (root);
+        Scene scn = new Scene(root);
         stg.setResizable(false);
         stg.setScene(scn);
         stg.setTitle("Создание сериала");

@@ -8,7 +8,8 @@ import java.sql.SQLException;
 
 public class ConnectionDB {
     public static Connection connectionDB;
-    public static void DBConnect2() throws SQLException {
+
+    public static void DBConnect() {
         String url = "jdbc:sqlite:serialsDB.db";
         connectionDB = null;
         try {
