@@ -16,8 +16,8 @@ public class MainWindowMain extends Application {
         Scene z = new Scene(root);
         z.getStylesheets().add("style.css");
         Window.getIcons().add(new Image("images/Icon.png"));
-        Window.setHeight(458.0);
-        Window.setWidth(656.0);
+//        Window.setHeight(454.0);
+//        Window.setWidth(652.0);
         Window.setTitle("SerialsGO");
         Window.setScene(z);
         Window.show();

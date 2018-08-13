@@ -14,12 +14,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" prefHeight="430.0" prefWidth="652.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.mainWindow.MainWindowController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0" prefWidth="652.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.mainWindow.MainWindowController">
 
     <children>
-      <AnchorPane fx:id="serialsField" layoutX="200.0" layoutY="25.0" prefHeight="405.0" prefWidth="452.0" style="-fx-background-color: rgb(241, 255, 232);;" visible="false">
+      <AnchorPane fx:id="serialsField" layoutX="200.0" layoutY="25.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="405.0" prefWidth="452.0" style="-fx-background-color: rgb(241, 255, 232);;" visible="false">
          <children>
-            <AnchorPane layoutX="258.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="265.0" prefWidth="180.0" style="-fx-background-color: fff;;" AnchorPane.bottomAnchor="126.0" AnchorPane.leftAnchor="258.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+            <AnchorPane layoutX="258.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="265.0" prefWidth="180.0" style="-fx-background-color: fff;;">
                <children>
                   <Button focusTraversable="false" layoutX="142.0" layoutY="240.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="22.0" prefWidth="35.0" text="фото">
                      <font>
@@ -55,7 +55,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <MenuBar prefHeight="25.0" prefWidth="652.0">
+      <MenuBar maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="652.0">
          <menus>
             <Menu mnemonicParsing="false" text="Файл">
                <items>
@@ -70,7 +70,7 @@
             </Menu>
          </menus>
       </MenuBar>
-      <TabPane focusTraversable="false" layoutY="25.0" prefHeight="405.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane focusTraversable="false" layoutY="25.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="405.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
             <Tab closable="false" text="Сериалы">
                <content>
@@ -100,19 +100,19 @@
             </Tab>
          </tabs>
       </TabPane>
-      <AnchorPane fx:id="startPane" layoutX="200.0" layoutY="25.0" prefHeight="405.0" prefWidth="452.0">
+      <AnchorPane fx:id="startPane" layoutX="200.0" layoutY="25.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="405.0" prefWidth="452.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="29.0" layoutY="103.0" prefHeight="33.0" prefWidth="407.0" text="ВЫБЕРИ СЕРИАЛ ИЗ СПИСКА СЛЕВА" wrapText="true">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="103.0" prefHeight="33.0" prefWidth="407.0" text="ВЫБЕРИ СЕРИАЛ ИЗ СПИСКА СЛЕВА" wrapText="true">
                <font>
                   <Font name="Arial Bold" size="20.0" />
                </font>
             </Label>
-            <Label layoutX="205.0" layoutY="143.0" prefHeight="27.0" prefWidth="55.0" text="ИЛИ">
+            <Label layoutX="197.0" layoutY="143.0" prefHeight="27.0" prefWidth="55.0" text="ИЛИ">
                <font>
                   <Font name="Arial Bold" size="20.0" />
                </font>
             </Label>
-            <Button fx:id="helloCreate" layoutX="33.0" layoutY="180.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="399.0" style="-fx-background-color: rgb(20, 79, 168); -fx-border-color: rgb(0, 0, 0); -fx-border-width: 2;" text="CОЗДАЙ НОВЫЙ" textFill="WHITE">
+            <Button fx:id="helloCreate" layoutX="25.0" layoutY="180.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="399.0" style="-fx-background-color: rgb(20, 79, 168); -fx-border-color: rgb(0, 0, 0); -fx-border-width: 2;" text="CОЗДАЙ НОВЫЙ" textFill="WHITE">
                <font>
                   <Font name="Arial Bold" size="19.0" />
                </font>
